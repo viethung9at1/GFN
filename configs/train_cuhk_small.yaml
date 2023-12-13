@@ -1,6 +1,6 @@
 # Dataset
 dataset: 'cuhk'
-dataset_dir: '/datasets/cuhk'
+dataset_dir: '/kaggle/input/cuhk-sysu/cuhk_sysu'
 train_set: 'trainval'
 test_set: 'test'
 retrieval_name_list: ('G100',)

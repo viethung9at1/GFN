@@ -61,6 +61,9 @@ class Backbone(nn.Module):
 # Generic Head
 class Head(nn.Module):
     def forward(self, x) -> Dict[str, Tensor]:
+        print(x.shape)
+        print(self.head)
+        print('-'*60)
         feat = self.head(x)
         x = torch.amax(x, dim=(2, 3), keepdim=True)
         feat = torch.amax(feat, dim=(2, 3), keepdim=True)

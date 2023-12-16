@@ -100,6 +100,7 @@ class GeneralizedRCNNTransform(nn.Module):
             result[i]["boxes"] = boxes
         return result
 
+
 def resize_boxes(boxes, original_size, new_size):
     # type: (Tensor, List[int], List[int]) -> Tensor
     ratios = [

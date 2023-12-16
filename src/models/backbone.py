@@ -7,7 +7,7 @@ import torch.nn.functional as F
 import torchvision
 from torchvision.models._utils import IntermediateLayerGetter
 from torchvision.ops import misc as misc_nn_ops
-## Types
+# Types
 from typing import Dict
 from torch import Tensor
 
@@ -39,7 +39,8 @@ class OldBackbone(nn.Sequential):
 # Legacy resnet50 head
 class OldRes5Head(nn.Sequential):
     def __init__(self, resnet):
-        super(OldRes5Head, self).__init__(OrderedDict([["layer4", resnet.layer4]]))  # res5
+        super(OldRes5Head, self).__init__(
+            OrderedDict([["layer4", resnet.layer4]]))  # res5
         self.featmap_names = ['feat_res4', 'feat_res5']
         self.out_channels = [1024, 2048]
 
@@ -73,7 +74,8 @@ class ResnetBackbone(Backbone):
         return_layers = {
             'layer3': 'feat_res4',
         }
-        self.body = IntermediateLayerGetter(resnet, return_layers=return_layers)
+        self.body = IntermediateLayerGetter(
+            resnet, return_layers=return_layers)
         self.out_channels = 1024
 
 
@@ -93,7 +95,8 @@ class ConvnextBackbone(Backbone):
         return_layers = {
             '5': 'feat_res4',
         }
-        self.body = IntermediateLayerGetter(convnext.features, return_layers=return_layers)
+        self.body = IntermediateLayerGetter(
+            convnext.features, return_layers=return_layers)
         self.out_channels = convnext.features[5][-1].block[5].out_features
 
 
@@ -114,8 +117,8 @@ class ConvnextHead(Head):
 
 # resnet model builder function
 def build_resnet(arch='resnet50', pretrained=True,
-        freeze_backbone_batchnorm=True, freeze_layer1=True,
-        norm_layer=misc_nn_ops.FrozenBatchNorm2d):
+                 freeze_backbone_batchnorm=True, freeze_layer1=True,
+                 norm_layer=misc_nn_ops.FrozenBatchNorm2d):
     # weights
     if pretrained:
         weights = torchvision.models.ResNet50_Weights.IMAGENET1K_V1
@@ -124,7 +127,8 @@ def build_resnet(arch='resnet50', pretrained=True,
 
     # load model
     if freeze_backbone_batchnorm:
-        resnet = torchvision.models.resnet50(weights=weights, norm_layer=norm_layer)
+        resnet = torchvision.models.resnet50(
+            weights=weights, norm_layer=norm_layer)
     else:
         resnet = torchvision.models.resnet50(weights=weights)
 
@@ -136,7 +140,7 @@ def build_resnet(arch='resnet50', pretrained=True,
 
     # setup backbone architecture
     backbone, head = ResnetBackbone(resnet), ResnetHead(resnet)
-    
+
     # return backbone, head
     return backbone, head
 
@@ -167,6 +171,12 @@ def build_convnext(arch='convnext_base', pretrained=True, freeze_layer1=True):
         if pretrained:
             weights = torchvision.models.ConvNeXt_Large_Weights.IMAGENET1K_V1
         convnext = torchvision.models.convnext_large(weights=weights)
+    elif arch == 'swin_s':
+        print('==> Backbone: Swin Transformer')
+        if pretrained:
+            weights = torchvision.models.Swin_S_Weights.IMAGENET1K_V1
+        convnext = torchvision.models.swin_s(weights=weights)
+
     else:
         raise NotImplementedError
 
@@ -176,6 +186,6 @@ def build_convnext(arch='convnext_base', pretrained=True, freeze_layer1=True):
 
     # setup backbone architecture
     backbone, head = ConvnextBackbone(convnext), ConvnextHead(convnext)
-    
+
     # return backbone, head
     return backbone, head

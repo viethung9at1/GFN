@@ -163,6 +163,7 @@ class SwinHead(nn.Sequential):
         super().__init__()  # last block
         self.swin = swin
         self.out_channels = [out_channels, out_channels*2]
+        self.featmap_names = ['feat_res4', 'feat_res5']
 
     def forward(self, x):
         semantic_weight = None

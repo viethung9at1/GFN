@@ -217,8 +217,12 @@ def build_convnext(arch='convnext_base', pretrained=True, freeze_layer1=True):
     # setup backbone architecture
     if arch == 'swin_s':
         backbone, head = SwinBackbone(convnext), SwinHead(convnext)
+        print('==> This text appear to say that the code uses SwinBackbone and SwinHead, not ConvnextBackbone and ConvnextHead')
+        print('-'*60)
     else:
         backbone, head = ConvnextBackbone(convnext), ConvnextHead(convnext)
+        print('==> This text say that the code uses ConvnextBackbone and ConvnextHead')
+        print('-'*60)
 
     # return backbone, head
     return backbone, head

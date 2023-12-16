@@ -114,8 +114,38 @@ class ConvnextHead(Head):
         ]
         self.featmap_names = ['feat_res4', 'feat_res5']
 
+# Swin Head
+
+
+class SwinHead(Head):
+    def __init__(self, swin):
+        super().__init__()
+        self.head = nn.Sequential(
+            swin.layers[-2],
+            swin.layers[-1],
+        )
+        self.out_channels = [
+            swin.layers[-3][-1].mlp[5].out_features,
+            swin.layers[-1][-1].mlp[5].out_features,
+        ]
+        self.featmap_names = ['feat_res4', 'feat_res5']
+
+# Swin Backbone
+
+
+class SwinBackbone(Backbone):
+    def __init__(self, swin):
+        super().__init__()
+        return_layers = {
+            '5': 'feat_res4',
+        }
+        self.body = IntermediateLayerGetter(
+            swin.features, return_layers=return_layers)
+        self.out_channels = swin.layers[-3][-1].mlp[5].out_features
 
 # resnet model builder function
+
+
 def build_resnet(arch='resnet50', pretrained=True,
                  freeze_backbone_batchnorm=True, freeze_layer1=True,
                  norm_layer=misc_nn_ops.FrozenBatchNorm2d):
@@ -185,7 +215,10 @@ def build_convnext(arch='convnext_base', pretrained=True, freeze_layer1=True):
         convnext.features[0].requires_grad_(False)
 
     # setup backbone architecture
-    backbone, head = ConvnextBackbone(convnext), ConvnextHead(convnext)
+    if arch == 'swin_s':
+        backbone, head = SwinBackbone(convnext), SwinHead(convnext)
+    else:
+        backbone, head = ConvnextBackbone(convnext), ConvnextHead(convnext)
 
     # return backbone, head
     return backbone, head

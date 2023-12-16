@@ -141,7 +141,7 @@ class SwinBackbone(Backbone):
         }
         self.body = IntermediateLayerGetter(
             swin.features, return_layers=return_layers)
-        self.out_channels = swin.features[-3][-1].mlp[5].out_features
+        self.out_channels = swin.features[-3][-1].mlp[3].out_features
 
 # resnet model builder function
 

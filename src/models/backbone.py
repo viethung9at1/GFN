@@ -121,12 +121,12 @@ class SwinHead(Head):
     def __init__(self, swin):
         super().__init__()
         self.head = nn.Sequential(
-            swin.layers[-2],
-            swin.layers[-1],
+            swin.features[-2],
+            swin.features[-1],
         )
         self.out_channels = [
-            swin.layers[-3][-1].mlp[5].out_features,
-            swin.layers[-1][-1].mlp[5].out_features,
+            swin.features[-3][-1].mlp[3].out_features,
+            swin.features[-1][-1].mlp[3].out_features,
         ]
         self.featmap_names = ['feat_res4', 'feat_res5']
 

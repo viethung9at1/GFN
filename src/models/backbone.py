@@ -222,11 +222,11 @@ def build_convnext(arch='convnext_base', pretrained=True, freeze_layer1=True):
         if pretrained:
             weights = torchvision.models.ConvNeXt_Large_Weights.IMAGENET1K_V1
         convnext = torchvision.models.convnext_large(weights=weights)
-    elif arch == 'swin_s':
+    elif arch == 'swin_t':
         print('==> Backbone: Swin Transformer')
         if pretrained:
-            weights = torchvision.models.Swin_S_Weights.IMAGENET1K_V1
-        convnext = torchvision.models.swin_s(weights=weights)
+            weights = torchvision.models.Swin_T_Weights.IMAGENET1K_V1
+        convnext = torchvision.models.swin_t(weights=weights)
 
     else:
         raise NotImplementedError

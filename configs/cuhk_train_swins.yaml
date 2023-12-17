@@ -10,7 +10,7 @@ oim_cq_size: 5000
 
 # Model
 model: 'convnext'
-backbone_arch: 'swin_s'
+backbone_arch: 'swin_t'
 
 # GFN
 gfn_mode: 'combined'

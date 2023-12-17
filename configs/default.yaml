@@ -82,7 +82,7 @@ clip_grads: True
 ### Number of training epochs
 epochs: 2
 ### Number of scenes per training batch
-batch_size: 4
+batch_size: 1
 ### Group images into wide vs. tall AR for batches
 aspect_ratio_grouping: False
 ### ImageNet stats to use for normalization of images
@@ -109,13 +109,13 @@ rpn_post_nms_topn_train: 2000
 rpn_post_nms_topn_test: 300
 rpn_pos_thresh_train: 0.7
 rpn_neg_thresh_train: 0.3
-rpn_batch_size_train: 256
+rpn_batch_size_train: 2
 rpn_pos_frac_train: 0.5
 rpn_nms_thresh: 0.7
 ## RoI Head
 roi_head_pos_thresh_train: 0.5
 roi_head_neg_thresh_train: 0.5
-roi_head_batch_size_train: 128
+roi_head_batch_size_train: 2
 roi_head_pos_frac_train: 0.5
 roi_head_score_thresh_test: 0.5
 roi_head_nms_thresh_test: 0.4
@@ -144,11 +144,11 @@ test_only: False
 # Computation
 ## torch
 device: 'cuda'
-workers: 4
+workers: 1
 ## Ray
 num_samples: 1
 num_workers: 1
-num_cpus_per_trial: 4
+num_cpus_per_trial: 12
 num_gpus_per_trial: 1
 resume: False
 

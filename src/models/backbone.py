@@ -132,7 +132,7 @@ class permuteo(torch.nn.Module):
         return x.permute(0, 3, 1, 2)
 
 
-class SwinBackbone(nn.Sequential):
+class SwinBackbone(Backbone):
     def __init__(self, swin) -> None:
         super().__init__()
         return_layers = {
@@ -143,8 +143,13 @@ class SwinBackbone(nn.Sequential):
         )
         self.out_channels = swin.features[5][-1].mlp[3].out_features
 
+    def forward(self, x):
+        y = self.body(x)
+        y['feat_res4'] = y['feat_res4'].permute(0, 3, 1, 2)
+        return y
 
-class SwinHead(nn.Sequential):
+
+class SwinHead(Head):
     def __init__(self, swin):
         super().__init__()
         self.head = nn.Sequential(

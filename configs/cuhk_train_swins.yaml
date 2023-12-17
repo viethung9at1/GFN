@@ -1,6 +1,6 @@
 # Dataset
 dataset: 'cuhk'
-dataset_dir: '/kaggle/input/cuhk-sysu/cuhk_sysu'
+dataset_dir: './datasets/cuhk_sysu'
 train_set: 'trainval'
 test_set: 'test'
 retrieval_name_list: ('G100',)
@@ -19,7 +19,7 @@ gfn_scene_pool_size: 56
 
 # Optimization
 epochs: 30
-batch_size: 24
+batch_size: 2
 
 # Augmentation
 aug_mode: 'rrc2'
@@ -28,5 +28,5 @@ aug_crop_res: 640
 # Logging
 trial_name: 'cuhk_final'
 eval_interval: 30
-ckpt_interval: 5
+ckpt_interval: 30
 log_dir: './logging'

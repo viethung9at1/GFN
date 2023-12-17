@@ -1,0 +1,50 @@
+Failure # 1 (occurred at 2023-12-17_17-33-30)
+Traceback (most recent call last):
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/ray_trial_executor.py", line 901, in get_next_executor_event
+    future_result = ray.get(ready_future)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/_private/client_mode_hook.py", line 105, in wrapper
+    return func(*args, **kwargs)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/worker.py", line 1809, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TuneError): [36mray::WrappedDistributedTorchTrainable.train()[39m (pid=81121, ip=192.168.68.200, repr=<ray.tune.integration.torch.WrappedDistributedTorchTrainable object at 0x7f91e10ed140>)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/trainable.py", line 349, in train
+    result = self.step()
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/integration/torch.py", line 128, in step
+    result = ray.get([w.step.remote() for w in self.workers])[0]
+ray.exceptions.RayTaskError(TuneError): [36mray::ImplicitFunc.step()[39m (pid=81187, ip=192.168.68.200, repr=func)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/function_runner.py", line 403, in step
+    self._report_thread_runner_error(block=True)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/function_runner.py", line 568, in _report_thread_runner_error
+    ("Trial raised an exception. Traceback:\n{}".format(err_tb_str))
+ray.tune.error.TuneError: Trial raised an exception. Traceback:
+[36mray::ImplicitFunc.step()[39m (pid=81187, ip=192.168.68.200, repr=func)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/function_runner.py", line 272, in run
+    self._entrypoint()
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/function_runner.py", line 351, in entrypoint
+    self._status_reporter.get_checkpoint(),
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/function_runner.py", line 640, in _trainable_func
+    output = fn()
+  File "/home/hung/.local/lib/python3.7/site-packages/osr_lib-1.1.0-py3.7.egg/osr/engine/main.py", line 130, in run
+    lr_scheduler=lr_scheduler if (config['scheduler'] in ('onecycle', 'cosine')) else None)
+  File "/home/hung/.local/lib/python3.7/site-packages/osr_lib-1.1.0-py3.7.egg/osr/engine/train.py", line 44, in train_one_epoch
+    loss_dict = model(images, targets)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/nn/parallel/distributed.py", line 1008, in forward
+    output = self._run_ddp_forward(*inputs, **kwargs)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/nn/parallel/distributed.py", line 971, in _run_ddp_forward
+    return module_to_run(*inputs, **kwargs)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/hung/.local/lib/python3.7/site-packages/osr_lib-1.1.0-py3.7.egg/osr/models/seqnext.py", line 354, in forward
+    _, detector_losses = self.roi_heads(bb_features, proposals, images.image_sizes, targets)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/hung/.local/lib/python3.7/site-packages/osr_lib-1.1.0-py3.7.egg/osr/models/seqnext.py", line 524, in forward
+    sim_loss = self.reid_loss(query_feats, query_labels)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/hung/.local/lib/python3.7/site-packages/osr_lib-1.1.0-py3.7.egg/osr/losses/oim_loss.py", line 42, in forward
+    outputs_labeled = inputs.mm(self.lut.t().clone())
+RuntimeError: CUDA out of memory. Tried to allocate 22.00 MiB (GPU 0; 7.75 GiB total capacity; 6.21 GiB already allocated; 2.06 MiB free; 6.26 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+

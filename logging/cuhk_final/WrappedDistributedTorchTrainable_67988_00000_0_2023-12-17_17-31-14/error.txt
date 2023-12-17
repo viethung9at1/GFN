@@ -1,0 +1,36 @@
+Failure # 1 (occurred at 2023-12-17_17-31-21)
+Traceback (most recent call last):
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/ray_trial_executor.py", line 901, in get_next_executor_event
+    future_result = ray.get(ready_future)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/_private/client_mode_hook.py", line 105, in wrapper
+    return func(*args, **kwargs)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/worker.py", line 1809, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TuneError): [36mray::WrappedDistributedTorchTrainable.train()[39m (pid=77047, ip=192.168.68.200, repr=<ray.tune.integration.torch.WrappedDistributedTorchTrainable object at 0x7fe221a3b410>)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/trainable.py", line 349, in train
+    result = self.step()
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/integration/torch.py", line 128, in step
+    result = ray.get([w.step.remote() for w in self.workers])[0]
+ray.exceptions.RayTaskError(TuneError): [36mray::ImplicitFunc.step()[39m (pid=77114, ip=192.168.68.200, repr=func)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/function_runner.py", line 403, in step
+    self._report_thread_runner_error(block=True)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/function_runner.py", line 568, in _report_thread_runner_error
+    ("Trial raised an exception. Traceback:\n{}".format(err_tb_str))
+ray.tune.error.TuneError: Trial raised an exception. Traceback:
+[36mray::ImplicitFunc.step()[39m (pid=77114, ip=192.168.68.200, repr=func)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/function_runner.py", line 272, in run
+    self._entrypoint()
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/function_runner.py", line 351, in entrypoint
+    self._status_reporter.get_checkpoint(),
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/function_runner.py", line 640, in _trainable_func
+    output = fn()
+  File "/home/hung/.local/lib/python3.7/site-packages/osr_lib-1.1.0-py3.7.egg/osr/engine/main.py", line 130, in run
+    lr_scheduler=lr_scheduler if (config['scheduler'] in ('onecycle', 'cosine')) else None)
+  File "/home/hung/.local/lib/python3.7/site-packages/osr_lib-1.1.0-py3.7.egg/osr/engine/train.py", line 47, in train_one_epoch
+    scaler.scale(losses).backward()
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/_tensor.py", line 396, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/autograd/__init__.py", line 175, in backward
+    allow_unreachable=True, accumulate_grad=True)  # Calls into the C++ engine to run the backward pass
+RuntimeError: Unable to find a valid cuDNN algorithm to run convolution
+

@@ -1,0 +1,62 @@
+Failure # 1 (occurred at 2023-12-17_17-34-02)
+Traceback (most recent call last):
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/ray_trial_executor.py", line 901, in get_next_executor_event
+    future_result = ray.get(ready_future)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/_private/client_mode_hook.py", line 105, in wrapper
+    return func(*args, **kwargs)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/worker.py", line 1809, in get
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TuneError): [36mray::WrappedDistributedTorchTrainable.train()[39m (pid=82486, ip=192.168.68.200, repr=<ray.tune.integration.torch.WrappedDistributedTorchTrainable object at 0x7f613583b4b0>)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/trainable.py", line 349, in train
+    result = self.step()
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/integration/torch.py", line 128, in step
+    result = ray.get([w.step.remote() for w in self.workers])[0]
+ray.exceptions.RayTaskError(TuneError): [36mray::ImplicitFunc.step()[39m (pid=82534, ip=192.168.68.200, repr=func)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/function_runner.py", line 403, in step
+    self._report_thread_runner_error(block=True)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/function_runner.py", line 568, in _report_thread_runner_error
+    ("Trial raised an exception. Traceback:\n{}".format(err_tb_str))
+ray.tune.error.TuneError: Trial raised an exception. Traceback:
+[36mray::ImplicitFunc.step()[39m (pid=82534, ip=192.168.68.200, repr=func)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/function_runner.py", line 272, in run
+    self._entrypoint()
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/function_runner.py", line 351, in entrypoint
+    self._status_reporter.get_checkpoint(),
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/ray/tune/function_runner.py", line 640, in _trainable_func
+    output = fn()
+  File "/home/hung/.local/lib/python3.7/site-packages/osr_lib-1.1.0-py3.7.egg/osr/engine/main.py", line 130, in run
+    lr_scheduler=lr_scheduler if (config['scheduler'] in ('onecycle', 'cosine')) else None)
+  File "/home/hung/.local/lib/python3.7/site-packages/osr_lib-1.1.0-py3.7.egg/osr/engine/train.py", line 44, in train_one_epoch
+    loss_dict = model(images, targets)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/nn/parallel/distributed.py", line 1008, in forward
+    output = self._run_ddp_forward(*inputs, **kwargs)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/nn/parallel/distributed.py", line 971, in _run_ddp_forward
+    return module_to_run(*inputs, **kwargs)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/hung/.local/lib/python3.7/site-packages/osr_lib-1.1.0-py3.7.egg/osr/models/seqnext.py", line 348, in forward
+    gfn_losses, _ = self.gfn(bb_features, targets, images.image_sizes)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/hung/.local/lib/python3.7/site-packages/osr_lib-1.1.0-py3.7.egg/osr/models/gfn.py", line 397, in forward
+    gfn_query_features_list = self.fuser(query_emb, scene_emb, p=True)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/hung/.local/lib/python3.7/site-packages/osr_lib-1.1.0-py3.7.egg/osr/models/gfn.py", line 98, in forward
+    p=p))
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/hung/.local/lib/python3.7/site-packages/osr_lib-1.1.0-py3.7.egg/osr/models/gfn.py", line 64, in forward
+    return self.norm(x.reshape(-1, d)).reshape(i, q, d)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/nn/modules/batchnorm.py", line 179, in forward
+    self.eps,
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/nn/functional.py", line 2436, in batch_norm
+    _verify_batch_size(input.size())
+  File "/home/hung/miniconda3/envs/osr/lib/python3.7/site-packages/torch/nn/functional.py", line 2404, in _verify_batch_size
+    raise ValueError("Expected more than 1 value per channel when training, got input size {}".format(size))
+ValueError: Expected more than 1 value per channel when training, got input size torch.Size([1, 2048])
+

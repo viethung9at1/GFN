@@ -2,3 +2,4 @@
 *.swp
 datasets/cuhk_sysu.tar.gz
 build/
+logging/

@@ -109,13 +109,13 @@ rpn_post_nms_topn_train: 2000
 rpn_post_nms_topn_test: 300
 rpn_pos_thresh_train: 0.7
 rpn_neg_thresh_train: 0.3
-rpn_batch_size_train: 2
+rpn_batch_size_train: 10
 rpn_pos_frac_train: 0.5
 rpn_nms_thresh: 0.7
 ## RoI Head
 roi_head_pos_thresh_train: 0.5
 roi_head_neg_thresh_train: 0.5
-roi_head_batch_size_train: 2
+roi_head_batch_size_train: 10
 roi_head_pos_frac_train: 0.5
 roi_head_score_thresh_test: 0.5
 roi_head_nms_thresh_test: 0.4

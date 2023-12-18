@@ -90,7 +90,7 @@ def get_model(config, num_pid, device='cpu'):
 
     # Make model distributed
     if is_distributed_trainable():
-        model = torch.nn.parallel.DistributedDataParallel(model, find_unused_parameters=True)
+        model = torch.nn.parallel.DistributedDataParallel(model, find_unused_parameters=True. device_ids=[0, 1])
         model_without_ddp = model.module
     else:
         model_without_ddp = model
